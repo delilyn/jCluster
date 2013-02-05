@@ -15,6 +15,7 @@ Use
 ===
 The I/O operations require a *.txt file, containing N data points with D dimensions to be separated into K clusters.
 The file needs to be integer/float values separated by whitespace (but CSV requires only a small tweak), with each
-data point on a single line. The header is as follows:
-<# Data Points> <# Dimensions + 1 (The last dimension of each line is Class Label> <# Clusters, K>
+data point on a single line. The header is as follows:<br>
+<# Data Points> <# Dimensions + 1 (The last dimension of each line is Class Label> <# Clusters, K><br>
+The data sets used for this implementation are part of the UC Irvine Machine Learning Repository.
 
