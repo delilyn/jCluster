@@ -1,5 +1,5 @@
-jCluster
-========
+jCluster (Completed - Maintenance)
+==================================
 
 Includes Java implementations of clustering algorithms, data normalization methods, and the adjusted Rand index. This
 project consists of the folowing files:<ol>
