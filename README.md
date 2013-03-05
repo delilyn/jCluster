@@ -11,6 +11,12 @@ classes.</li>
 <li>Clustering.JAVA - Represents a group of Cluster objects created by the k-means clustering on a data set. Required
 by all other classes except for Cluster.JAVA</li></ol>
 
+WARNING
+=======
+The last known good version of Kmeans.Java was written for testing of the accuracy of the Adjusted Rand Index. The
+Adjusted Rand Index will be split off into a separate file, and the Kmeans.Java file will be re-written for 
+utilitarian purposes.
+
 Use
 ===
 The I/O operations require a *.txt file, containing N data points with D dimensions to be separated into K clusters.
