@@ -14,7 +14,7 @@ public class Cluster {
 	private ArrayList< double[] > points;	//List of double arrays representing points
 	
 	/***************************************************************************************************************
-	Class: Constructor
+	Method: Constructor
 	Description: Requires a double[] that represents the coordinates of a centroid.
 	***************************************************************************************************************/
 	public Cluster( double[] c ) {
@@ -23,7 +23,7 @@ public class Cluster {
 	}
 	
 	/***************************************************************************************************************
-	Class: centroid
+	Method: centroid
 	Description: This method will return the coordinates of the point representing the centroid of the cluster
 	***************************************************************************************************************/
 	public double[] centroid() {
@@ -31,7 +31,7 @@ public class Cluster {
 	}
 	
 	/****************************************************************************************************************
-	Class: newCentroid
+	Method: newCentroid
 	Description: This method accepts the coordinates for the new centroid
 	****************************************************************************************************************/
 	public void newCentroid( double[] coord ) {
@@ -39,7 +39,7 @@ public class Cluster {
 	}
 	
 	/***************************************************************************************************************
-	Class: addPoint
+	Method: addPoint
 	Description: This method will accept a point and add it to the list of data points in this cluster.
 	***************************************************************************************************************/
 	public void addPoint( double[] p ) {
@@ -47,7 +47,7 @@ public class Cluster {
 	}
 	
 	/***************************************************************************************************************
-	Class: point
+	Method: point
 	Description: This method will return the coordinates of the Point at the provided index in the cluster.
 	***************************************************************************************************************/
 	public double[] point( int i ) {
@@ -55,7 +55,7 @@ public class Cluster {
 	}
 	
 	/***************************************************************************************************************
-	Class: size
+	Method: size
 	Description: This method will return the number of points in the cluster.
 	***************************************************************************************************************/
 	public int size() {
@@ -63,7 +63,7 @@ public class Cluster {
 	}
 	
 	/***************************************************************************************************************
-	Class: clearPoints
+	Method: clearPoints
 	Description: This method will clear the list of data points in the cluster. This must be conducted after each
 	iteration of the k-means.
 	***************************************************************************************************************/
