@@ -137,7 +137,7 @@ public class Kmeans {
 	}
 	
 	/***************************************************************************************************************
-	Class: cluster
+	Method: cluster
 	Description: This method will create a clustering and return it. It must know which run this is, to properly
 	seed centroids.
 	***************************************************************************************************************/
@@ -159,7 +159,7 @@ public class Kmeans {
 	}
 	
 	/***************************************************************************************************************
-	Class: assignPoints
+	Method: assignPoints
 	Description: This method will assign a data point to the cluster of the closest centroid. It will go through 
 	each point, calculate the Euclidean distance between that point and every centroid, and then assign the point to 
 	that cluster.
@@ -182,7 +182,7 @@ public class Kmeans {
 	}
 	
 	/***************************************************************************************************************
-	Class: initCentroids
+	Method: initCentroids
 	Description: This method will initialize the k centroids from randomly selected points. Points have been 
 	selected previously, so this method must know which run to use.
 	***************************************************************************************************************/
@@ -197,7 +197,7 @@ public class Kmeans {
 	}
 	
 	/***************************************************************************************************************
-	Class: updateCentroid
+	Method: updateCentroid
 	Description: This method will calculate the new centroid of the cluster by averaging the values of each
 	attribute of the all the points in the cluster. It will then set this new point as the current centroid, and 
 	clear the list of points in the cluster.
@@ -217,7 +217,7 @@ public class Kmeans {
 	}
 	
 	/****************************************************************************************************************
-	Class: euclidDist
+	Method: euclidDist
 	Description: This method will accept two points and return their Euclidean distance in the form of a double. It 
 	assumes both points have coordinates equal in length.
 	****************************************************************************************************************/
@@ -231,7 +231,7 @@ public class Kmeans {
 	}
 	
 	/****************************************************************************************************************
-	Class: sSE
+	Method: sSE
 	Description: This method will take a cluster and measure its SSE. The SSE in the cluster is the total error, or 
 	distance from the centroid, of each point in the cluster.
 	****************************************************************************************************************/
@@ -244,7 +244,7 @@ public class Kmeans {
 	}
 	
 	/****************************************************************************************************************
-	Class:aRI
+	Method:aRI
 	Description: This method will take accept two clusterings and determine the adjusted Rand Index, which is the
 	accuracy between a labeled clustering and a clustering resulting from k-means. The higher the number, the more
 	similar the clusterings.
@@ -291,7 +291,7 @@ public class Kmeans {
 	}
 	
 	/****************************************************************************************************************
-	Class: initPoints
+	Method: initPoints
 	Description: This method create a table of 10 lists of k randomly selected points to be initial centroids, so 
 	same initial conditions can be used between normalization methods.
 	****************************************************************************************************************/
