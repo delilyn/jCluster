@@ -1,79 +1,77 @@
-//package edu.lsus.streetman.kmeans;
-
-/********************************************************************************************************************
+package edu.lsus.streetman.kmeans;
+/*****************************************************************************************************************
 Robert Streetman
 LSUS - CST 790 (Dr Celebi)
 Fall 2012
 
-Class: Clustering
-Description: This class represents a clustering of data points. It stores the centroids of the clusters, labels of
-the data points, etc.
-********************************************************************************************************************/
+This class represents a clustering of data points. It stores the centroids of the clusters, labels of the data
+points, etc.
+*****************************************************************************************************************/
 import java.util.ArrayList;
 
 public class Clustering {
-  
-	int k;				                //The number of clusters in this clustering
-	int numPoints;
-	int[] label;			            //The integer class labels of each point
-	ArrayList< Cluster > cluster;	//The list of Cluster objects
+	
+	private int numPoints;
+	private int[] label;			//The integer class labels of each point
+	private ArrayList< Cluster > cluster;	//The list of Cluster objects
 	
 	/************************************************************************************************************
-	The default constructor for a Clustering object. Takes the number of points to initialize the list of labels
+	Class: Constructor
+	Description: Accepts the number of points to initialize the list of labels. The labels are for comparing
+	labeled output to actual output in the adjusted Rand index.
 	************************************************************************************************************/
-	public Clustering( int n )
-	{
+	public Clustering( int n ) {
 		numPoints = n;
 		cluster = new ArrayList< Cluster >();	//Initialize list of Cluster objects
-		label = new int[ numPoints ];		      //Initialize list of labels for each point
+		label = new int[ numPoints ];		//Initialize list of labels for each point
 	}
 	
 	/************************************************************************************************************
-	This method returns the class label of the point at the specified index
+	Class: label
+	Description: This method returns the class label of the point at the specified index.
 	************************************************************************************************************/
-	public int label( int index )
-	{
+	public int label( int index ) {
 		return label[ index ];
 	}
 	
 	/************************************************************************************************************
-	This method will accept a point's index and label, and save that label to the Clustering's array
+	Class: setLabel
+	Description: This method will accept a point's index and label, and save that label to the Clustering's array
 	************************************************************************************************************/
-	public void setLabel( int point, int lbl )
-	{
+	public void setLabel( int point, int lbl ) {
 		label[ point ] = lbl;
 	}
 	
 	/************************************************************************************************************
-	This method will clear the Clustering's labels
+	Class: clearLabel
+	Description: This method will clear the labels of all the points in the Clustering.
 	************************************************************************************************************/
-	public void clearLabel()
-	{
+	public void clearLabel() {
 		label = new int [ numPoints ];
 	}
 	
-	
 	/************************************************************************************************************
-	This method will accept a list of labels pulled from an external file
+	Class: createLabel
+	Description: This method will accept a list of labels pulled from an external file. These are in the orignal
+	order.
 	************************************************************************************************************/
-	public void createLabel( int[] lbl )
-	{
+	public void createLabel( int[] lbl ) {
 		label = lbl;
 	}
 	
 	/************************************************************************************************************
-	This method returns the specified Cluster from the Clustering's collection
+	Class: getCluster
+	Description: This method returns the specified Cluster object from the current Clustering.
 	************************************************************************************************************/
-	public Cluster getCluster( int index )
-	{
+	public Cluster getCluster( int index ) {
 		return cluster.get( index );
 	}
 	
 	/************************************************************************************************************
-	This method accepts a cluster and adds it to the current list of clusters
+	Class: addCluster
+	Description: This method accepts a cluster and adds it to the current Clustering.
 	************************************************************************************************************/
-	public void addCluster( Cluster c )
-	{
+	public void addCluster( Cluster c ) {
 		cluster.add( c );
 	}
 }
