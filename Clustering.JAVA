@@ -16,7 +16,7 @@ public class Clustering {
 	private ArrayList< Cluster > cluster;	//The list of Cluster objects
 	
 	/************************************************************************************************************
-	Class: Constructor
+	Method: Constructor
 	Description: Accepts the number of points to initialize the list of labels. The labels are for comparing
 	labeled output to actual output in the adjusted Rand index.
 	************************************************************************************************************/
@@ -27,7 +27,7 @@ public class Clustering {
 	}
 	
 	/************************************************************************************************************
-	Class: label
+	Method: label
 	Description: This method returns the class label of the point at the specified index.
 	************************************************************************************************************/
 	public int label( int index ) {
@@ -35,7 +35,7 @@ public class Clustering {
 	}
 	
 	/************************************************************************************************************
-	Class: setLabel
+	Method: setLabel
 	Description: This method will accept a point's index and label, and save that label to the Clustering's array
 	************************************************************************************************************/
 	public void setLabel( int point, int lbl ) {
@@ -43,7 +43,7 @@ public class Clustering {
 	}
 	
 	/************************************************************************************************************
-	Class: clearLabel
+	Method: clearLabel
 	Description: This method will clear the labels of all the points in the Clustering.
 	************************************************************************************************************/
 	public void clearLabel() {
@@ -51,7 +51,7 @@ public class Clustering {
 	}
 	
 	/************************************************************************************************************
-	Class: createLabel
+	Method: createLabel
 	Description: This method will accept a list of labels pulled from an external file. These are in the orignal
 	order.
 	************************************************************************************************************/
@@ -60,7 +60,7 @@ public class Clustering {
 	}
 	
 	/************************************************************************************************************
-	Class: getCluster
+	Method: getCluster
 	Description: This method returns the specified Cluster object from the current Clustering.
 	************************************************************************************************************/
 	public Cluster getCluster( int index ) {
@@ -68,7 +68,7 @@ public class Clustering {
 	}
 	
 	/************************************************************************************************************
-	Class: addCluster
+	Method: addCluster
 	Description: This method accepts a cluster and adds it to the current Clustering.
 	************************************************************************************************************/
 	public void addCluster( Cluster c ) {
