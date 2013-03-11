@@ -28,6 +28,12 @@ public class Kmeans {
 	private static ArrayList< double[] > raw;		//Raw data points parsed from file
 	private static ArrayList< int[] > randomInit;	//Indices of initial centroids. Each double array is the list of random points to be the initial centroids
 	
+	/***************************************************************************************************************
+	Method: main
+	Description: This method currently coordinates all aspects of the k-means code. It is being migrated to a more
+	OOP-friendly format, in the form of an object with portable methods. It will allow the programmer to add the
+	k-means class to sort any list of double, float, int, and long values into any number of clusters, iteratively.
+	***************************************************************************************************************/
 	public static void main( String[] args ) {
 		
 		fName = args[ 0 ];					
@@ -244,7 +250,7 @@ public class Kmeans {
 	}
 	
 	/****************************************************************************************************************
-	Method:aRI
+	Method: aRI
 	Description: This method will take accept two clusterings and determine the adjusted Rand Index, which is the
 	accuracy between a labeled clustering and a clustering resulting from k-means. The higher the number, the more
 	similar the clusterings.
