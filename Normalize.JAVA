@@ -24,7 +24,6 @@ public class Normalize {
 	normalized points. The points are normalized by subtracting each point by the min, then dividing by the range (min - max).
 	******************************************************************************************************************************************/
 	public static ArrayList< double[] > minMax( ArrayList< double[] > data ) {
-		ArrayList< double[] > norm = new ArrayList< double[] >();	//List of normalized data points
 		int dimen = data.get( 0 ).length;
 		double[] min = new double[ dimen ];		//List of the lowest value of each attribute
 		double[] max = new double[ dimen ];		//List of the highest value of each attribute
@@ -45,6 +44,7 @@ public class Normalize {
 			}
 		}
 		//Create normalized list of data points by subtracting minimum attr. value from attr. value, then dividing by attr. range
+		ArrayList< double[] > norm = new ArrayList< double[] >();	//List of normalized data points
 		for( double[] pt : data ) {
 			double[] newPoint = new double[ dimen ];
 			for( int a = 0; a < dimen; a++ ) {
@@ -66,7 +66,6 @@ public class Normalize {
 	the max value found for that attribute.
 	******************************************************************************************************************************************/
 	public static ArrayList< double[] > maxNorm( ArrayList< double[] > data ) {
-		ArrayList< double[] > norm = new ArrayList< double[] >();	//List of normalized data points
 		int dimen = data.get( 0 ).length;
 		double[] max = new double[ dimen ];		//List of the highest value in each attribute
 		//Set the max of each attribute to the first point in the set
@@ -82,6 +81,7 @@ public class Normalize {
 			}
 		}
 		//Create normalized list of data points by dividing attr. value by attr. maximum
+		ArrayList< double[] > norm = new ArrayList< double[] >();	//List of normalized data points
 		for( double[] pt : data ) {
 			double[] newPoint = new double[ dimen ];
 			for( int a = 0; a < dimen; a++ ) {
@@ -103,7 +103,6 @@ public class Normalize {
 	difference between the max and min values for that attribute ( range ).
 	******************************************************************************************************************************************/
 	public static ArrayList< double[] > rangeNorm( ArrayList< double[] > data ) {
-		ArrayList< double[] > norm = new ArrayList< double[] >();	//This will hold the normalized data and be returned
 		int dimen = data.get( 0 ).length;
 		double[] min = new double[ dimen ];		//List of the lowest value in each attribute
 		double[] max = new double[ dimen ];		//List of the highest value in each attribute
@@ -124,6 +123,7 @@ public class Normalize {
 			}
 		}
 		//Create normalized list of data points by dividing attr. value by attr. range
+		ArrayList< double[] > norm = new ArrayList< double[] >();	//List of normalized data points
 		for( double[] pt : data ) {
 			double[] newPoint = new double[ dimen ];
 			for( int a = 0; a < dimen; a++ ) {
@@ -145,7 +145,6 @@ public class Normalize {
 	the mean of all attribute values, and this difference is divided by the standard deviation of all attributes.
 	******************************************************************************************************************************************/
 	public static ArrayList< double[] > zScore( ArrayList< double[] > data ) {
-		ArrayList< double[] > norm = new ArrayList< double[] >();	//List of normalized points
 		int dimen = data.get( 0 ).length;
 		int N = data.size();
 		double[] mean = new double[ dimen ];		//List of the mean value of each attribute
@@ -173,6 +172,7 @@ public class Normalize {
 			stdDev[ a ] = Math.sqrt( sumSquared[ a ] / ( N - 1 ) );
 		}
 		//Create normalized list of data points by subtracting attr. mean from attr. value, then dividing by attr. std. dev.
+		ArrayList< double[] > norm = new ArrayList< double[] >();	//List of normalized data points
 		for( double[] pt : data ) {
 			double[] newPoint = new double[ dimen ];
 			for( int a = 0; a < dimen; a++ ) {
@@ -194,7 +194,6 @@ public class Normalize {
 	norm for that point, which is the square root of the sum of all the values, squared, of that attribute for each point.
 	******************************************************************************************************************************************/
 	public static ArrayList< double[] > euclidNorm( ArrayList< double[] > data ) {
-		ArrayList< double[] > norm = new ArrayList< double[] >();	//List of normalized points
 		int dimen = data.get( 0 ).length;
 		double[] euclidNorm = new double [ dimen ];			//List of the Euclid. norm of each attribute
 		//Calculate the Euclidean norm of each attribute
@@ -206,6 +205,7 @@ public class Normalize {
 			euclidNorm[ a ] = Math.sqrt( sumSquare );
 		}
 		//Create the normalized list of data points by dividing attr. value by attr. Euclid. norm
+		ArrayList< double[] > norm = new ArrayList< double[] >();	//List of normalized data points
 		for( double[] pt : data ) {
 			double[] newPoint = new double[ dimen ];
 			for( int a = 0; a < dimen; a++ ) {
@@ -227,7 +227,6 @@ public class Normalize {
 	among values of an attributes, all points with tying ranks are assigned the average of the sum of the ranks.
 	******************************************************************************************************************************************/
 	public static ArrayList< double[] > rankedNorm( ArrayList< double[] > data ) {
-		ArrayList< double[] > norm = new ArrayList< double[] >();	//List of normalized points
 		double[] tmp = data.get( 0 );
 		int dimen = tmp.length;
 		int size = data.size();
@@ -253,6 +252,7 @@ public class Normalize {
 			}
 		}
 		//Create list of normalized points by finding the rank of every one of a point's attr. values
+		ArrayList< double[] > norm = new ArrayList< double[] >();	//List of normalized data points
 		for( int p = 0; p < size; p++ ) {
 			tmp = data.get( p );
 			double[] newPoint = new double[ dimen ];
