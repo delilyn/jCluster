@@ -13,22 +13,22 @@ import java.util.Random;
 
 public class Kmeans {
 
-	private int K;				//The user-specified number of clusters to form
-	private int I;				//The number of iterations until the centroids stop moving
-	private int N;				//The number of points in the data set
-	private int D;				//The number of attributes, or dimensionality, of each point.
-	private double totalSSE;	//Global holder for the total SSE of clustering
-	private Clustering c1;		//A collection of clusters, each with a centroid and points
-	private Clustering c2;		//A second external criteria to compare the first to.
-	private ArrayList< double[] > dataPts;	//The list of data points to be clustered with Kmeans
-	private ArrayList< double[] > raw;		//Raw data points parsed from file
+	private int K;								//The number of clusters to form
+	private int I;								//The number of iterations until the centroids stop moving
+	private int N;								//The number of points in the data set
+	private int D;								//The number of attributes, or dimensionality, of each point.
+	private double totalSSE;					//The total SSE of the clustering
+	private ArrayList< Cluster > clustering;	//A collection of clusters, each with a centroid and points
+	private ArrayList< double[] > dataPts;		//The list of data points to be clustered with Kmeans
+	private ArrayList< double[] > raw;			//Raw data points parsed from file
 	
 	/******************************************************************************************************************************************
 	Method: Constructor
-	Description: This method accepts a data set in the form of an array list of double[], where each double[] holds
-	the coordinates of a point.
+	Description: This method accepts a data set in the form of an array list of double[], where each double[] holds the coordinates of a point.
+	It will create its own copy of the data set and retrieve the necessary parameters. It also accepts a char denoting which centroid
+	initialization method to use for the clustering.
 	******************************************************************************************************************************************/
-	public Kmeans( ArrayList< double[] > data, int k ) {
+	public Kmeans( ArrayList< double[] > data, int k, char i ) {
 		K = k;	
 		I = 0;
 		N = data.size();			
@@ -38,13 +38,17 @@ public class Kmeans {
 		for( double[] pt : data ) {
 					dataPts.add( pt.clone() );
 		}
-		//int[] lbl = new int[ N ];					//This array holds the ordered list of class labels
-		//Create external criteria
-		//c2 = new Clustering( N );
-		//c2.createLabel( lbl );		//This 'clustering' only contains the order class labels from file
-		//System.out.println( "K-Means Algorithm Results\nNumber of Clusters: " + K + "\tNumber of Iterations: "
-					//+ I + "\nNumber of Points: " + N + "\tDimensionality: " + D + "\n" );
-		
+		//Create the list of clusters
+		clustering = new ArrayList< Cluster >();
+		//Determine which initialization method the user wants to use. It defaults to "randomInitialization" in the case of unrecognized chars
+		switch( i ) {
+		case 'd':
+			break;
+		case 'r':
+		default:
+			randInitPoints();
+			break;
+		}
 	}
 	
 	/******************************************************************************************************************************************
@@ -52,21 +56,18 @@ public class Kmeans {
 	Description: This method will create a clustering and return it. It must know which run this is, to properly
 	seed centroids.
 	******************************************************************************************************************************************/
-	public void cluster( Clustering c, int run ) {
-		initCentroids( c, run );
-		//Start clustering
-		for( int iter = 0; iter < I; iter++ ) {
-			for( int i = 0; i < K; i++ ) {
-				c.getCluster( i ).clearPoints();
-			}
-			assignPoints( c );
-			double sum = 0.0;
-			for( int i = 0; i < K; i++ ) {
-				sum += sSE( c.getCluster( i ) );	
-				updateCentroid( c.getCluster( i ) );
-			}
-			totalSSE = sum;
+	public void cluster(  ) {
+		//Clear the points in each cluster
+		for( Cluster c : clustering ) {
+			c.clearPoints();
 		}
+		assignPoints();
+		//totalSSe = 0.0;
+		for( Cluster c : clustering ) {
+			//sum += sSE( c.get( i ) );	
+			updateCentroid( c );
+		}
+		//totalSSE = sum;
 	}
 	
 	/******************************************************************************************************************************************
@@ -75,36 +76,21 @@ public class Kmeans {
 	each point, calculate the Euclidean distance between that point and every centroid, and then assign the point to 
 	that cluster.
 	******************************************************************************************************************************************/
-	public void assignPoints( Clustering c ) {
+	public void assignPoints( ) {
 		for( int i = 0; i < N; i ++ ) {
 			double dist;
-			double min = euclidDist( dataPts.get( i ),c.getCluster( 0 ).centroid() );
+			double min = euclidDist( dataPts.get( i ), clustering.get( 0 ).centroid() );
 			int mIndex = 0;	
 			for( int j = 1; j < K; j++ ) {
-				dist = euclidDist( dataPts.get( i ), c.getCluster( j ).centroid() );
+				dist = euclidDist( dataPts.get( i ), clustering.get( j ).centroid() );
 				if( dist < min ) {
 					mIndex = j;		
 					min = dist;    
 				}
 			}
-			c.getCluster( mIndex ).addPoint( dataPts.get( i ) );//Add the point to the closest centroid
-			c.setLabel( i, mIndex );							//Add the class label to the clustering
+			clustering.get( mIndex ).addPoint( dataPts.get( i ) );//Add the point to the closest centroid
+			//c.setLabel( i, mIndex );							//Add the class label to the clustering
 		}
-	}
-	
-	/******************************************************************************************************************************************
-	Method: initCentroids
-	Description: This method will initialize the k centroids from randomly selected points. Points have been 
-	selected previously, so this method must know which run to use.
-	******************************************************************************************************************************************/
-	public void initCentroids( Clustering c, int run ) {
-		//Seed each cluster with an initial centroid
-		for( int i = 0; i < K; i++ ) {
-			//This will 1) select a random int in the range of the list of data points, 2) get the data point at
-			//that index, 3) creates a new cluster with that point as the centroid, 4) and adds that cluster to
-			//a list
-			//c.addCluster( new Cluster ( dataPts.get( randomInit.get( run )[ i ] ) ) );
-		}		
 	}
 	
 	/******************************************************************************************************************************************
@@ -114,17 +100,17 @@ public class Kmeans {
 	clear the list of points in the cluster.
 	******************************************************************************************************************************************/
 	public void updateCentroid( Cluster c ) {
-		int m = c.size();					//Number of points in the cluster
-		double sum;							//Total of values of each attribute d
-		double[] newCoord = new double[ D ];//This array represents the coordinates of the new centroid
+		int m = c.size();
+		double sum;
+		double[] newCoord = new double[ D ];
 		for( int i = 0; i < D; i++ ) {
 			sum = 0.0;
 			for( int j = 0; j < m; j++ ) {
-				sum += c.point( j )[ i ];	//This should give i-th coord of the j-th point
+				sum += c.point( j )[ i ];
 			}
-			newCoord[ i ] = ( sum / m );	//Then average the values of that attribute across all points
+			newCoord[ i ] = ( sum / m );
 		}
-		c.newCentroid( newCoord );	//Update current centroid
+		c.newCentroid( newCoord.clone() );
 	}
 	
 	/******************************************************************************************************************************************
@@ -158,17 +144,27 @@ public class Kmeans {
 	Method: randInitPoints
 	Description: This method will randomly choose k unique points from the data set to act as initial centroids.
 	******************************************************************************************************************************************/
-	public void randInitPoints() {
-		Random rand;							
-		//randomInit = new ArrayList< int[] >();	//10 int arrays, each integer is the index of a point for centroid
-		//Create table
-		for( int i = 0; i < 10; i++ ) {
-			rand = new Random();		
-			int[] run = new int[ K ];	
-			for( int c= 0; c < K; c++ ) {
-				run[ c ] = rand.nextInt( raw.size() );	//Pick a point for the initial centroid
+	private void randInitPoints() {
+		int[] indices = new int[ K ];	//List of previously selected indices, which cannot be selected again
+		//Randomly choose K centroids for the K clusters
+		int i = 0;
+		while( i < K ) {
+			Random gen = new Random();
+			int rand = gen.nextInt( N );
+			boolean selected = false;
+			for( int c = 0; c < i; c++ ) {
+				if( indices[ c ] == rand ) {
+					selected = true;
+				}
 			}
-			//randomInit.add( run );	
+			if( selected == false ) {
+				indices[ i ] = rand;
+				i++;
+			}
+		}
+		//Assign the points at the selected indices as the centroids of the clusters
+		for( int j = 0; j < K; j++ ) {
+			clustering.add( new Cluster( dataPts.get(  indices[ j ] ).clone() ) );
 		}
 	}
 	
@@ -178,7 +174,8 @@ public class Kmeans {
 	will then find the furthest point in the data set, and select this point as another centroid, and continue until 
 	k centroids have been determined.
 	******************************************************************************************************************************************/
-	public void distInitPoints() {
+	private void distInitPoints() {
+		Random rand;
 		
 	}
 }
